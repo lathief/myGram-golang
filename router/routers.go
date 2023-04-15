@@ -2,10 +2,12 @@ package router
 
 import (
 	"myGram/controllers"
+	"myGram/docs"
 	_ "myGram/docs"
 	"myGram/middleware"
 	"myGram/repository"
 	"myGram/service"
+	"os"
 
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -21,7 +23,6 @@ import (
 // @contact.name myGram API Support
 // @contact.url http://swagger.io/support
 // @license.name Apache 2.0
-// @BasePath /
 func StartRouter(r *gin.Engine, db *gorm.DB) {
 
 	repoUser := repository.NewUserRepository(db)
@@ -75,7 +76,9 @@ func StartRouter(r *gin.Engine, db *gorm.DB) {
 		socialMediaRouter.PUT("/:socialMediaId", middleware.SocialMediaAuthorization(), ctrlSosmed.UpdateSosmed)
 		socialMediaRouter.DELETE("/:socialMediaId", middleware.SocialMediaAuthorization(), ctrlSosmed.DeleteSosmed)
 	}
-
-	// // routing docs
+	docs.SwaggerInfo.Host = "mygram-golang-production-988c.up.railway.app:" + os.Getenv("PORT")
+	docs.SwaggerInfo.BasePath = "/"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	// routing docs
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
