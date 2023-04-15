@@ -21,7 +21,6 @@ import (
 // @contact.name myGram API Support
 // @contact.url http://swagger.io/support
 // @license.name Apache 2.0
-// @host localhost:8080
 // @BasePath /
 func StartRouter(r *gin.Engine, db *gorm.DB) {
 
