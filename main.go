@@ -7,8 +7,6 @@ import (
 	"os"
 
 	"myGram/router"
-	
-	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,7 +18,7 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.Use(cors.Default())
+
 	router.StartRouter(r, db)
 
 	r.Use(gin.Recovery())
