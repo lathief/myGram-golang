@@ -16,7 +16,7 @@ var (
 	password   = os.Getenv("DB_PASSWORD")
 	dbPort     = os.Getenv("DB_PORT")
 	dbName     = os.Getenv("DB_NAME")
-	DEBUG_MODE = os.Getenv("DEBUG_MODE")
+	DEBUG_MODE = true
 	db         *gorm.DB
 	err        error
 )
