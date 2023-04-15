@@ -5,7 +5,6 @@ import (
 	"log"
 	"myGram/database"
 	"os"
-	"time"
 
 	"myGram/router"
 
@@ -20,13 +19,7 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "GET", "POST", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"*"},
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
+	r.Use(cors.Default())
 	router.StartRouter(r, db)
 
 	r.Use(gin.Recovery())
