@@ -76,7 +76,7 @@ func StartRouter(r *gin.Engine, db *gorm.DB) {
 		socialMediaRouter.PUT("/:socialMediaId", middleware.SocialMediaAuthorization(), ctrlSosmed.UpdateSosmed)
 		socialMediaRouter.DELETE("/:socialMediaId", middleware.SocialMediaAuthorization(), ctrlSosmed.DeleteSosmed)
 	}
-	docs.SwaggerInfo.Host = "https://mygram-golang-production-988c.up.railway.app:" + os.Getenv("PORT")
+	docs.SwaggerInfo.Host = "mygram-golang-production-988c.up.railway.app:" + os.Getenv("PORT")
 	docs.SwaggerInfo.BasePath = "/"
 	// routing docs
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
