@@ -5,9 +5,11 @@ import (
 	"log"
 	"myGram/database"
 	"os"
+	"time"
 
 	"myGram/router"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -18,7 +20,13 @@ func main() {
 	}
 
 	r := gin.Default()
-
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
 	router.StartRouter(r, db)
 
 	r.Use(gin.Recovery())
