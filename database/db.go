@@ -10,12 +10,12 @@ import (
 )
 
 var (
-	host       = "localhost"
-	user       = "admin"
-	password   = "admin"
-	dbPort     = "5432"
-	dbName     = "fp-go"
-	DEBUG_MODE = true
+	host       = os.Getenv("DB_HOST")
+	user       = os.Getenv("DB_USER")
+	password   = os.Getenv("DB_PASSWORD")
+	dbPort     = os.Getenv("DB_PORT")
+	dbName     = os.Getenv("DB_NAME")
+	DEBUG_MODE = os.Getenv("DEBUG_MODE")
 	db         *gorm.DB
 	err        error
 )
