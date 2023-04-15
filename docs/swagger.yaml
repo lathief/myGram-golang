@@ -1,0 +1,832 @@
+basePath: /
+definitions:
+  entities.RequestComment:
+    properties:
+      message:
+        example: A Photo
+        type: string
+      photo_id:
+        example: 1
+        type: integer
+    type: object
+  entities.RequestLogin:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      password:
+        example: "123456"
+        type: string
+    type: object
+  entities.RequestPhoto:
+    properties:
+      caption:
+        example: My Photo
+        type: string
+      photo_url:
+        example: https://example.com/photo.jpg
+        type: string
+      title:
+        example: A Photo
+        type: string
+    type: object
+  entities.RequestRegister:
+    properties:
+      age:
+        example: 18
+        type: integer
+      email:
+        example: test@example.com
+        type: string
+      password:
+        example: "123456"
+        type: string
+      username:
+        example: test
+        type: string
+    type: object
+  entities.RequestSocialMedia:
+    properties:
+      name:
+        type: string
+      social_media_url:
+        type: string
+    type: object
+  entities.ResponseComment:
+    properties:
+      created_at:
+        example: "2021-08-01T00:00:00Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      message:
+        example: Nice Photo
+        type: string
+      photo:
+        properties:
+          caption:
+            example: My Photo
+            type: string
+          id:
+            example: 1
+            type: integer
+          photo_url:
+            example: https://example.com/photo.jpg
+            type: string
+          title:
+            example: A Photo
+            type: string
+          user_id:
+            example: 1
+            type: integer
+        type: object
+      photo_id:
+        example: 1
+        type: integer
+      updated_at:
+        example: "2021-08-01T00:00:00Z"
+        type: string
+      user:
+        properties:
+          email:
+            example: test@example.com
+            type: string
+          username:
+            example: test
+            type: string
+        type: object
+      user_id:
+        example: 1
+        type: integer
+    type: object
+  entities.ResponsePhoto:
+    properties:
+      caption:
+        example: My Photo
+        type: string
+      created_at:
+        example: "2021-11-03T01:52:41.035Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      photo_url:
+        example: https://example.com/photo.jpg
+        type: string
+      title:
+        example: A Photo
+        type: string
+      updated_at:
+        example: "2021-11-03T01:52:41.035Z"
+        type: string
+      user:
+        properties:
+          email:
+            example: test@example.com
+            type: string
+          username:
+            example: anon
+            type: string
+        type: object
+    type: object
+  entities.ResponseSocialMedia:
+    properties:
+      created_at:
+        example: "2021-11-03T01:52:41.035Z"
+        type: string
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Instagram
+        type: string
+      social_media_url:
+        example: https://www.sosmed.com/username
+        type: string
+      updated_at:
+        example: "2021-11-03T01:52:41.035Z"
+        type: string
+      user:
+        properties:
+          email:
+            example: test@example.com
+            type: string
+          username:
+            example: anon
+            type: string
+        type: object
+    type: object
+  helpers.BaseResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    name: myGram API Support
+    url: http://swagger.io/support
+  description: This is the documentation for myGram API
+  license:
+    name: Apache 2.0
+  termsOfService: http://swagger.io/terms/
+  title: myGram API Documentation
+  version: 1.0.0
+paths:
+  /comment:
+    get:
+      consumes:
+      - application/json
+      description: Get comments
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entities.ResponseComment'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get comments
+      tags:
+      - Comment
+    post:
+      consumes:
+      - application/json
+      description: Create a comment
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the comment
+        in: path
+        name: commentID
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestComment'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Create a comment
+      tags:
+      - Comment
+  /comment/:commentID:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a comment
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the comment
+        in: path
+        name: commentID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Delete a comment
+      tags:
+      - Comment
+    get:
+      consumes:
+      - application/json
+      description: Get one comment by id
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the Comment
+        in: path
+        name: photoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.ResponseComment'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get one comment by id
+      tags:
+      - Comment
+    put:
+      consumes:
+      - application/json
+      description: Update a comment
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the comment
+        in: path
+        name: commentID
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestComment'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Update a comment
+      tags:
+      - Comment
+  /photo:
+    get:
+      consumes:
+      - application/json
+      description: Get All Photos
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entities.ResponsePhoto'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get All Photos
+      tags:
+      - Photo
+    post:
+      consumes:
+      - application/json
+      description: Create new photo
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestPhoto'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Create new photo
+      tags:
+      - Photo
+  /photo/:photoId:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a photo
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the photo
+        in: path
+        name: photoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Delete a photo
+      tags:
+      - Photo
+    get:
+      consumes:
+      - application/json
+      description: Get One photo by id
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the photo
+        in: path
+        name: photoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.ResponsePhoto'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get One photo by id
+      tags:
+      - Photo
+    put:
+      consumes:
+      - application/json
+      description: Update a photo
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the photo
+        in: path
+        name: photoID
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestPhoto'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Update a photo
+      tags:
+      - Photo
+  /socialmedia:
+    get:
+      consumes:
+      - application/json
+      description: Get All social media
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entities.ResponseSocialMedia'
+                  type: array
+              type: object
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get All social media
+      tags:
+      - Social Media
+    post:
+      consumes:
+      - application/json
+      description: Create social media
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestSocialMedia'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Create new social media
+      tags:
+      - Social Media
+  /socialmedia/:socialmediaid:
+    delete:
+      consumes:
+      - application/json
+      description: Delete by id social media
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the social media
+        in: path
+        name: socialmediaid
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Delete by id social media
+      tags:
+      - Social Media
+    get:
+      consumes:
+      - application/json
+      description: Get One social media by id
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the social media
+        in: path
+        name: photoID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/helpers.BaseResponse'
+            - properties:
+                data:
+                  $ref: '#/definitions/entities.ResponseSocialMedia'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Get One social media by id
+      tags:
+      - Social Media
+    put:
+      consumes:
+      - application/json
+      description: Update by id social media
+      parameters:
+      - description: Bearer + user token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: ID of the social media
+        in: path
+        name: socialmediaid
+        required: true
+        type: integer
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestSocialMedia'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "401":
+          description: Unauthorization
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Update by id social media
+      tags:
+      - Social Media
+  /user/login:
+    post:
+      consumes:
+      - application/json
+      description: Login new user
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Login new user
+      tags:
+      - User
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/entities.RequestRegister'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helpers.BaseResponse'
+      summary: Register new user
+      tags:
+      - User
+swagger: "2.0"
