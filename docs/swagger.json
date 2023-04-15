@@ -13,8 +13,6 @@
         },
         "version": "1.0.0"
     },
-    "host": "localhost:8080",
-    "basePath": "/",
     "paths": {
         "/comment": {
             "get": {
@@ -1120,10 +1118,6 @@
                             "type": "string",
                             "example": "My Photo"
                         },
-                        "id": {
-                            "type": "integer",
-                            "example": 1
-                        },
                         "photo_url": {
                             "type": "string",
                             "example": "https://example.com/photo.jpg"
@@ -1131,10 +1125,6 @@
                         "title": {
                             "type": "string",
                             "example": "A Photo"
-                        },
-                        "user_id": {
-                            "type": "integer",
-                            "example": 1
                         }
                     }
                 },
@@ -1158,10 +1148,6 @@
                             "example": "test"
                         }
                     }
-                },
-                "user_id": {
-                    "type": "integer",
-                    "example": 1
                 }
             }
         },

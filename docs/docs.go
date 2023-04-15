@@ -1127,10 +1127,6 @@ const docTemplate = `{
                             "type": "string",
                             "example": "My Photo"
                         },
-                        "id": {
-                            "type": "integer",
-                            "example": 1
-                        },
                         "photo_url": {
                             "type": "string",
                             "example": "https://example.com/photo.jpg"
@@ -1138,10 +1134,6 @@ const docTemplate = `{
                         "title": {
                             "type": "string",
                             "example": "A Photo"
-                        },
-                        "user_id": {
-                            "type": "integer",
-                            "example": 1
                         }
                     }
                 },
@@ -1165,10 +1157,6 @@ const docTemplate = `{
                             "example": "test"
                         }
                     }
-                },
-                "user_id": {
-                    "type": "integer",
-                    "example": 1
                 }
             }
         },
@@ -1270,8 +1258,8 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
-	Host:             "localhost:8080",
-	BasePath:         "/",
+	Host:             "",
+	BasePath:         "",
 	Schemes:          []string{},
 	Title:            "myGram API Documentation",
 	Description:      "This is the documentation for myGram API",

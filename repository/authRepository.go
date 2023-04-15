@@ -9,10 +9,6 @@ import (
 type UserRepository interface {
 	Create(data entities.User) error
 	Login(email string) (entities.User, error)
-	// 	Get() ([]entities.User, error)
-	// 	GetById(id uint) (entities.User, error)
-	// 	Update(data entities.User) (entities.User, error)
-	// 	Delete(userID uint) error
 }
 
 type userRepository struct {

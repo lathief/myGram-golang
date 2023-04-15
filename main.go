@@ -22,7 +22,7 @@ func main() {
 	r := gin.Default()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
+		AllowMethods:     []string{"PUT", "GET", "POST", "DELETE", "OPTIONS"},
 		AllowHeaders:     []string{"*"},
 		AllowCredentials: true,
 		MaxAge:           12 * time.Hour,
